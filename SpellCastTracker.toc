@@ -1,0 +1,7 @@
+## Interface: 100100
+## Title: Spell Cast Tracker
+## Notes: Tracks the number of times each spell is cast during combat
+## Author: Your Name
+## Version: 1.0
+
+SpellCastTracker.lua
