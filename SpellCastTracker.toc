@@ -1,7 +1,15 @@
-## Interface: 100100
+## Interface: 120005
 ## Title: Spell Cast Tracker
 ## Notes: Tracks the number of times each spell is cast during combat
-## Author: Your Name
-## Version: 1.0
+## Author: Baraius
+## Version: 1.1
+## SavedVariables: SpellCastTrackerDB
+## SavedVariablesPerCharacter: SpellCastTrackerCharDB
+## Category-enUS: Combat
+## IconTexture: Interface\ICONS\Spell_Holy_MagicalSentry
+## OptionalDeps: LibStub, LibDataBroker-1.1
+
+Libs\LibStub\LibStub.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 SpellCastTracker.lua
