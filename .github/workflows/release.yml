@@ -14,7 +14,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Install Lua 5.1
         run: sudo apt-get update && sudo apt-get install -y lua5.1
       - name: Parse Lua and run regression checks
@@ -30,7 +30,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - name: Package preview
@@ -44,8 +44,9 @@ jobs:
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
       - name: Retain installable ZIP
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: SpellCastTracker-package
           path: .release/*.zip
           if-no-files-found: error
+          include-hidden-files: true
