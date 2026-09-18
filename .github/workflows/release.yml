@@ -1,0 +1,51 @@
+name: Validate and package
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua 5.1
+        run: sudo apt-get update && sudo apt-get install -y lua5.1
+      - name: Parse Lua and run regression checks
+        run: |
+          find . -name '*.lua' -not -path './.git/*' -print0 | xargs -0 -n1 luac5.1 -p
+          lua5.1 tests/regression.lua
+          python3 tests/validate_toc.py
+
+  package:
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Package preview
+        if: github.ref_type != 'tag'
+        uses: BigWigsMods/packager@v2.5.1
+        with:
+          args: -d
+      - name: Publish tagged release
+        if: github.ref_type == 'tag'
+        uses: BigWigsMods/packager@v2.5.1
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+      - name: Retain installable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpellCastTracker-package
+          path: .release/*.zip
+          if-no-files-found: error
