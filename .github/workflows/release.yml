@@ -38,21 +38,13 @@ jobs:
         uses: BigWigsMods/packager@v2.5.1
         with:
           args: -d
-      - name: Check CurseForge publishing credential
-        if: github.ref_type == 'tag'
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-        run: |
-          if [ -z "$CF_API_KEY" ]; then
-            echo "::error::Add the CurseForge upload token as the CF_API_KEY repository Actions secret."
-            exit 1
-          fi
       - name: Publish tagged release
         if: github.ref_type == 'tag'
         uses: BigWigsMods/packager@v2.5.1
+        with:
+          args: -p 0
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
       - name: Retain installable ZIP
         uses: actions/upload-artifact@v7.0.1
         with:
