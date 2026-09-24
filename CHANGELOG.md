@@ -1,3 +1,7 @@
+# 1.6.1
+
+Connect CurseForge project 1113915 to automated tagged releases. Add CurseForge project metadata for addon managers. No gameplay changes.
+
 # 1.6.0
 
 Tracks successful public player casts during combat, with per-character and account totals, casts per minute, and keybind reports.

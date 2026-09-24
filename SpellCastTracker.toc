@@ -2,7 +2,8 @@
 ## Title: Spell Cast Tracker
 ## Notes: Tracks combat casts per keybind to surface keybind-ergonomics tuning
 ## Author: Baraius
-## Version: 1.6.0
+## Version: 1.6.1
+## X-Curse-Project-ID: 1113915
 ## SavedVariables: SpellCastTrackerDB
 ## SavedVariablesPerCharacter: SpellCastTrackerCharDB
 ## Category-enUS: Combat
