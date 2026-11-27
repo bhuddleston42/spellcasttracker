@@ -17,10 +17,15 @@ C_Spell = {
 GetActionInfo = function(slot)
     assert(not combat, "action scan during combat")
     scans = scans + 1
-    if slot == 1 then return "spell", 101 end
+    if slot == 1 then return "macro", 101, "spell" end
+    if slot == 2 then return "spell", 101, "assistedcombat" end
 end
-GetBindingKey = function(binding) if binding == "ACTIONBUTTON1" then return "CTRL-1" end end
-GetBindingAction = function() return "ACTIONBUTTON1" end
+GetMacroSpell = function() error("Resolved spell ID was treated as macro index") end
+GetBindingKey = function(binding)
+    if binding == "ACTIONBUTTON1" then return "CTRL-1" end
+    if binding == "ACTIONBUTTON2" then return "CTRL-9" end
+end
+GetBindingAction = function(key) return key == "CTRL-9" and "ACTIONBUTTON2" or "ACTIONBUTTON1" end
 CreateFrame = function()
     local f = {}
     function f:RegisterEvent() end
@@ -69,6 +74,7 @@ assert(SpellCastTrackerCharDB.combatTime == 15, "duplicate end double counted")
 local log = table.concat(output, "\n")
 assert(log:find("restricted cast(s) omitted", 1, true))
 assert(log:find("C1", 1, true), "keybind feature lost")
+assert(not log:find("C9", 1, true), "single-button assistant polluted spell bindings")
 now = 30; combat = true; event("PLAYER_REGEN_DISABLED")
 now = 35; cast(101); slash("reset")
 assert(SpellCastTrackerCharDB.combatTime == 0)

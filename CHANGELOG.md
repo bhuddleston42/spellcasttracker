@@ -1,3 +1,9 @@
+# 1.6.2
+
+Exclude Single-Button Assistant slots from spell binding lookup and preserve resolved macro spell bindings.
+
+Update Retail compatibility metadata for Midnight 12.1.5 (interface 120105).
+
 # 1.6.1
 
 Connect CurseForge project 1113915 to automated tagged releases. Add CurseForge project metadata for addon managers. No gameplay changes.

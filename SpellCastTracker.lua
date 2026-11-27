@@ -220,7 +220,15 @@ end
 -- Return every spell ID that an action slot can fire. Direct spell placements
 -- yield one ID; macros may yield multiple if they use form/stance conditionals.
 local function GetSpellsAtSlot(slot)
-    local t, id = GetActionInfo(slot)
+    if C_ActionBar and C_ActionBar.IsAssistedCombatAction then
+        local assisted = C_ActionBar.IsAssistedCombatAction(slot)
+        if not IsPublic(assisted) or assisted then return {} end
+    end
+    local t, id, subtype = GetActionInfo(slot)
+    if not IsPublic(t) or not IsPublic(id) or not IsPublic(subtype) then return {} end
+    if subtype == "assistedcombat" then return {} end
+    if t == "macro" and subtype == "spell" and id then return { id } end
+    if t == "macro" and subtype and subtype ~= "macro" then return {} end
     if t == "spell" and id then
         return { id }
     elseif t == "macro" and id then
